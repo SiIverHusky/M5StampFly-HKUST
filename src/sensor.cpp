@@ -175,3 +175,7 @@ void bottom_tof_read(sensor_value_t* data) {
     }
     data->bottom_tof_range = range;   
 }
+
+uint16_t front_tof_read() {
+    return tof_front_get_range();
+}

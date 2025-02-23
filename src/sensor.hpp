@@ -72,5 +72,6 @@ void ahrs_reset(void);
 void sensor_calc_offset_avarage(void);
 void sensor_read(sensor_value_t* data);
 void bottom_tof_read(sensor_value_t* data);
+uint16_t front_tof_read(void);
 
 #endif
