@@ -33,12 +33,12 @@
 
 volatile uint16_t Connect_flag = 0;
 
-// Telemetry相手のMAC ADDRESS 4C:75:25:AD:B6:6C
+// Telemetry partner MAC ADDRESS 4C:75:25:AD:B6:6C
 // ATOM Lite (C): 4C:75:25:AE:27:FC
 // 4C:75:25:AD:8B:20
 // 4C:75:25:AF:4E:84
 // 4C:75:25:AD:8B:20
-// 4C:75:25:AD:8B:20 赤水玉テープ　ATOM lite
+// 4C:75:25:AD:8B:20 Red polka dot tape ATOM lite
 uint8_t JoyAddr[6] = {0};
 uint8_t TelemAddr[6] = {0x4C, 0x75, 0x25, 0xAD, 0x8B, 0x20};
 volatile uint8_t MyMacAddr[6];
@@ -55,7 +55,7 @@ volatile uint8_t Recv_MAC[3];
 
 void on_esp_now_sent(const uint8_t *mac_addr, esp_now_send_status_t status);
 
-// 受信コールバック
+// Receive callback
 void OnDataRecv(const uint8_t *mac_addr, const uint8_t *recv_data, int data_len) {
     Connect_flag = 0;
 
@@ -124,7 +124,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *recv_data, int data_len)
     Stick[BUTTON_ARM]     = recv_data[19];//auto_up_down_status
     Stick[BUTTON_FLIP]    = recv_data[20];
     Stick[CONTROLMODE]    = recv_data[21];//Mode:rate or angle control
-    Stick[ALTCONTROLMODE] = recv_data[22];//高度制御
+    Stick[ALTCONTROLMODE] = recv_data[22];//Altitude control
 
     uint8_t ahrs_reset_flag = recv_data[23];
 
@@ -145,7 +145,7 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *recv_data, int data_len)
 #endif
 }
 
-// 送信コールバック
+// Send callback
 void on_esp_now_sent(const uint8_t *mac_addr, esp_now_send_status_t status) {
     esp_now_send_status = status;
     memcpy((void*)SendAddress, mac_addr, 6);
@@ -163,7 +163,7 @@ void rc_init(void) {
     // Initialize Stick list
     for (uint8_t i = 0; i < 16; i++) Stick[i] = 0.0;
 
-    // ESP-NOW初期化
+    // Initialize ESP-NOW
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
 
@@ -178,7 +178,7 @@ void rc_init(void) {
         ESP.restart();
     }
 
-    // MACアドレスブロードキャスト
+    // Broadcast MAC address
     uint8_t addr[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
     memcpy((void*)peerInfo[JOY].peer_addr, addr, 6);
     peerInfo[JOY].channel = CHANNEL;
@@ -196,7 +196,7 @@ void rc_init(void) {
         //USBSerial.printf("%d\n", i);
     }
 
-    // ESP-NOW再初期化
+    // Reinitialize ESP-NOW
     WiFi.mode(WIFI_STA);
     WiFi.disconnect();
     if (esp_now_init() == ESP_OK) {
@@ -206,7 +206,7 @@ void rc_init(void) {
         ESP.restart();
     }
 
-    //テレメトリーM5ATOMとペアリング
+    // Pair with telemetry M5ATOM
     memcpy((void*)peerInfo[TELEM].peer_addr, TelemAddr, 6);
     peerInfo[TELEM].channel = CHANNEL;
     peerInfo[TELEM].encrypt = false;
@@ -214,10 +214,10 @@ void rc_init(void) {
     {
             USBSerial.println("Failed to telemetry add peer2");
     }
-    else USBSerial.printf("Telemetry peering Sucess!\n\r");
+    else USBSerial.printf("Telemetry peering Success!\n\r");
     esp_now_register_send_cb(on_esp_now_sent);
 
-    // ESP-NOWコールバック登録
+    // Register ESP-NOW callback
     esp_now_register_recv_cb(OnDataRecv);
     USBSerial.println("ESP-NOW Ready.");
 }
@@ -251,7 +251,7 @@ uint8_t telemetry_send(esp_now_peer_info_t* peerInfo, uint8_t *data, uint16_t da
         error_flag = 1;
         // state = 1;
     }
-    // 一度送信エラーを検知してもしばらくしたら復帰する
+    // Even if a transmission error is detected once, it will recover after a while
     if (cnt > 500) {
         error_flag = 0;
         cnt        = 0;

@@ -60,7 +60,7 @@ void telemetry(void) {
         //telemetry_send(senddata, sizeof(senddata));
     } else if (StampFly.flag.mode > AVERAGE_MODE) {
         const uint8_t N = 10;
-        // N回に一度送信
+        // Send once every N times
         if (Telem_cnt == 0) telemetry_sequence();
         Telem_cnt++;
         if (Telem_cnt > N - 1) Telem_cnt = 0;
@@ -76,11 +76,11 @@ void telemetry_sequence(void) {
             make_telemetry_data(senddata);
             // Send !
             if (telemetry_send(&peerInfo[TELEM], senddata, sizeof(senddata)) == 1){
-                esp_led(0x330000, 1);  // Telemetory Reciver OFF
+                esp_led(0x330000, 1);  // Telemetry Receiver OFF
                 //USBSerial.printf("NG Mode=%d\n\r", StampFly.flag.mode);
             }
             else{
-                esp_led(0x003300, 1);  // Telemetory Reciver ON
+                esp_led(0x003300, 1);  // Telemetry Receiver ON
                 //USBSerial.printf("OK Mode=%d\n\r", StampFly.flag.mode);
             }
             // Telem_mode = 2;

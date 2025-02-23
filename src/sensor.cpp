@@ -108,18 +108,18 @@ void sensor_read(sensor_value_t* data) {
     uint16_t bottom_tof_range;
     float voltage;
 
-    // 以下では航空工学の座標軸の取り方に従って
-    // X軸：前後（前が正）左肩上がりが回転の正
-    // Y軸：右左（右が正）頭上げが回転の正
-    // Z軸：下上（下が正）右回りが回転の正
-    // となる様に軸の変換を施しています
-    // BMI270の座標軸の撮り方は
-    // X軸：右左（右が正）頭上げが回転の正
-    // Y軸：前後（前が正）左肩上がりが回転の正
-    // Z軸：上下（上が正）左回りが回転の正
+    // In the following, according to the coordinate system of aeronautical engineering
+    // X-axis: front and back (front is positive) left shoulder up is positive rotation
+    // Y-axis: right and left (right is positive) head up is positive rotation
+    // Z-axis: up and down (down is positive) right turn is positive rotation
+    // The axis is transformed to be
+    // The coordinate system of BMI270 is
+    // X-axis: right and left (right is positive) head up is positive rotation
+    // Y-axis: front and back (front is positive) left shoulder up is positive rotation
+    // Z-axis: up and down (up is positive) left turn is positive rotation
 
     // Get IMU raw data
-    imu_update();  // IMUの値を読む前に必ず実行
+    imu_update();  // Always execute before reading IMU values
     ax  =   imu_get_acc_y();
     ay  =   imu_get_acc_x();
     az  = - imu_get_acc_z();
@@ -169,7 +169,7 @@ void bottom_tof_read(sensor_value_t* data) {
     if (ToF_bottom_data_ready_flag) {
         //dcnt = 0u;
         ToF_bottom_data_ready_flag = 0;
-        // 距離の値の更新
+        // Update distance value
         range = tof_bottom_get_range();
         //USBSerial.printf("%04d\n\r", bottom_tof_range);
     }

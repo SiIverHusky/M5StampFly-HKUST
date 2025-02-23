@@ -26,7 +26,6 @@
 #include "motor.hpp"
 #include <Arduino.h>
 
-// 制御周期
 // Control period
 float Control_period = 0.0025f;  // 400Hz
 

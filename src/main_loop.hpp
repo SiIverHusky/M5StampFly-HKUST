@@ -33,7 +33,7 @@
 #include <vl53lx_platform.h>
 #include "stampfly.hpp"
 
-// グローバル関数の宣言
+// Declaration of global functions
 void init_copter(void);
 void loop_400Hz(void);
 
