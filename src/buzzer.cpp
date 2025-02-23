@@ -11,8 +11,8 @@ const int buzzerPin = 40;
 const int channel   = 5;
 
 void setup_pwm_buzzer(void) {
-    ledcSetup(channel, 4000, 8);        // 配置PWM通道：通道0，频率3000Hz，分辨率8位
-    ledcAttachPin(buzzerPin, channel);  // 将PWM通道绑定到GPIO
+    ledcSetup(channel, 4000, 8);        // Configure PWM channel: channel 0, frequency 3000Hz, resolution 8-bit
+    ledcAttachPin(buzzerPin, channel);  // Bind PWM channel to GPIO
 }
 
 void buzzer_sound(uint32_t frequency, uint32_t duration_ms) {
