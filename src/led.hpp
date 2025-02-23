@@ -34,7 +34,7 @@
 #define RED           0xff0000
 #define YELLOW        0xffff00
 #define GREEN         0x00ff00
-#define PERPLE        0xff00ff
+#define PURPLE        0xff00ff
 #define POWEROFFCOLOR 0x18EBF9
 #define FLIPCOLOR     0xFF9933
 

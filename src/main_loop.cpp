@@ -155,8 +155,8 @@ void init_mode(void) {
 void average_mode(void) {
     // Gyro offset Estimate 角速度のオフセットを取得
     // Set LED Color
-    onboard_led1(PERPLE, 1);
-    onboard_led2(PERPLE, 1);
+    onboard_led1(PURPLE, 1);
+    onboard_led2(PURPLE, 1);
 
     if (StampFly.counter.offset < AVERAGENUM) {
         sensor_calc_offset_avarage();

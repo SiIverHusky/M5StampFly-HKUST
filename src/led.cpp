@@ -56,7 +56,7 @@ void led_show(void) {
 }
 
 void led_drive(void) {
-    //onboard_led1(PERPLE, 1);
+    //onboard_led1(PURPLE, 1);
     //onboard_led2(YELLOW, 1);
     //esp_led(WHITE,1);
     // LED show
