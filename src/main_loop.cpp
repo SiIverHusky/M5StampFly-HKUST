@@ -26,9 +26,9 @@
 //
 // StampFly Flight Control Main Module
 //
-// Desigend by Kouhei Ito 2023~2024
+// Designed by Kouhei Ito 2023~2024
 //
-// 2024-08-11 StampFly 自己開発用のスケルトンプログラム制作開始
+// 2024-08-11 Started creating the skeleton program for StampFly self-development
 
 #include "main_loop.hpp"
 #include "motor.hpp"
@@ -56,7 +56,7 @@ float limit(float value, float min, float max);
 
 // Main loop
 void loop_400Hz(void) {
-    // 400Hzで以降のコードが実行
+    // Code executed at 400Hz
 
     update_loop400Hz();
     
@@ -77,8 +77,7 @@ void loop_400Hz(void) {
     // End of Loop_400Hz function    
 }
 
-// 割り込み関数
-// Intrupt function
+// Interrupt function
 hw_timer_t* timer = NULL;
 void IRAM_ATTR onTimer(void) {
     StampFly.flag.loop = 1;
@@ -91,7 +90,7 @@ void init_copter(void) {
     // Initialize Mode
     StampFly.flag.mode = INIT_MODE;
     StampFly.flag.loop = 0;
-    // Initialaze LED function
+    // Initialize LED function
     led_init();
     // Initialize Serial communication
     USBSerial.begin(115200);
@@ -107,8 +106,7 @@ void init_copter(void) {
     USBSerial.printf("Finish StampFly init!\r\n");
     start_tone();
 
-    // 割り込み設定
-    // Initialize intrupt
+    // Initialize interrupt
     timer = timerBegin(0, 80, true);
     timerAttachInterrupt(timer, &onTimer, true);
     timerAlarmWrite(timer, 2500, true);
@@ -116,7 +114,7 @@ void init_copter(void) {
 
 }
 
-//loop400Hzの更新関数
+// Update function for loop400Hz
 void update_loop400Hz(void) {
     uint32_t now_time;
 
@@ -153,7 +151,7 @@ void init_mode(void) {
 }
 
 void average_mode(void) {
-    // Gyro offset Estimate 角速度のオフセットを取得
+    // Gyro offset Estimate
     // Set LED Color
     onboard_led1(PURPLE, 1);
     onboard_led2(PURPLE, 1);
@@ -171,7 +169,7 @@ void average_mode(void) {
 }
 
 void flight_mode(void) {
-    //飛行するためのコードを以下に記述する
+    // Write code for flight here
     // Set LED Color
     onboard_led1(YELLOW, 1);
     onboard_led2(YELLOW, 1);
@@ -185,7 +183,7 @@ void flight_mode(void) {
 }
 
 void parking_mode(void) {
-    //着陸している時に行う処理を記述する
+    // Write code for when landing here
     // Set LED Color
     onboard_led1(GREEN, 1);
     onboard_led2(GREEN, 1);
