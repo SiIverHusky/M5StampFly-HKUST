@@ -27,12 +27,16 @@
 #include "stampfly.hpp"
 #include "main_loop.hpp"
 #include "sensor.hpp"
+#include "optical_flow.h"
 
 void setup() {
     init_copter();
-    delay(100);
+    optical_flow_init();
+    delay(1000);
+    of_print_data();
 }
 
 void loop() {
+    of_print_data();
     loop_400Hz();
 }

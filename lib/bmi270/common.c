@@ -57,7 +57,7 @@ struct bmi2_sens_config config;
 void bmi270_dev_init(void)
 {
   Bmi270.intf = BMI2_SPI_INTF;
-  //Bmi270.chip_id = 0x24;
+  Bmi270.chip_id = 0x24;
   Bmi270.read = bmi2_spi_read;
   Bmi270.write =bmi2_spi_write;
   Bmi270.delay_us = bmi2_delay_us;

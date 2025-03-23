@@ -42,6 +42,7 @@
 #include "stampfly.hpp"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "optical_flow.h"
 
 
 void IRAM_ATTR onTimer(void);
@@ -57,9 +58,9 @@ float limit(float value, float min, float max);
 // Main loop
 void loop_400Hz(void) {
     // Code executed at 400Hz
-
+    of_print_data();
     update_loop400Hz();
-    
+    of_print_data();
     // Mode select
     if (StampFly.flag.mode == INIT_MODE) 
         init_mode();
@@ -71,6 +72,8 @@ void loop_400Hz(void) {
         parking_mode();
 
     //// Telemetry
+    i.track();
+    of_print_data();
     telemetry();
     StampFly.flag.oldmode = StampFly.flag.mode;  // Memory now mode
     
@@ -120,25 +123,26 @@ void update_loop400Hz(void) {
 
     while (StampFly.flag.loop == 0);
     StampFly.flag.loop = 0;
-
+    of_print_data();
     #if 0
     USBSerial.printf("%9.4f %9.4f %04d\n\r", 
         StampFly.times.elapsed_time, 
         StampFly.times.interval_time,
         StampFly.sensor.bottom_tof_range);
     #endif
-
+    of_print_data();
     //Clock
     now_time = micros();
     StampFly.times.old_elapsed_time = StampFly.times.elapsed_time;
     StampFly.times.elapsed_time = 1e-6 * (now_time - StampFly.times.start_time);
     StampFly.times.interval_time = StampFly.times.elapsed_time - StampFly.times.old_elapsed_time;
-    
+    of_print_data();
     // Read Sensor Value
-    sensor_read(&StampFly.sensor);
-    
+   // sensor_read(&StampFly.sensor);
+    of_print_data();
     // LED Drive
     led_drive();
+    of_print_data();
 }
 
 void init_mode(void) {
